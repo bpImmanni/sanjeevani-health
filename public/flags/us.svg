@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 64 64">
+  <defs>
+    <clipPath id="c">
+      <circle cx="32" cy="32" r="30"></circle>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#c)">
+    <rect width="64" height="64" fill="#fff"></rect>
+    <!-- stripes -->
+    <g fill="#b22234">
+      <rect y="0" width="64" height="5"></rect>
+      <rect y="10" width="64" height="5"></rect>
+      <rect y="20" width="64" height="5"></rect>
+      <rect y="30" width="64" height="5"></rect>
+      <rect y="40" width="64" height="5"></rect>
+      <rect y="50" width="64" height="5"></rect>
+      <rect y="60" width="64" height="4"></rect>
+    </g>
+    <!-- canton -->
+    <rect x="0" y="0" width="28" height="22" fill="#3c3b6e"></rect>
+    <!-- stars (simplified dots, readable at small size) -->
+    <g fill="#fff" opacity="0.95">
+      <circle cx="4" cy="4" r="1.1"></circle><circle cx="9" cy="4" r="1.1"></circle><circle cx="14" cy="4" r="1.1"></circle><circle cx="19" cy="4" r="1.1"></circle><circle cx="24" cy="4" r="1.1"></circle>
+      <circle cx="6.5" cy="7" r="1.1"></circle><circle cx="11.5" cy="7" r="1.1"></circle><circle cx="16.5" cy="7" r="1.1"></circle><circle cx="21.5" cy="7" r="1.1"></circle>
+      <circle cx="4" cy="10" r="1.1"></circle><circle cx="9" cy="10" r="1.1"></circle><circle cx="14" cy="10" r="1.1"></circle><circle cx="19" cy="10" r="1.1"></circle><circle cx="24" cy="10" r="1.1"></circle>
+      <circle cx="6.5" cy="13" r="1.1"></circle><circle cx="11.5" cy="13" r="1.1"></circle><circle cx="16.5" cy="13" r="1.1"></circle><circle cx="21.5" cy="13" r="1.1"></circle>
+      <circle cx="4" cy="16" r="1.1"></circle><circle cx="9" cy="16" r="1.1"></circle><circle cx="14" cy="16" r="1.1"></circle><circle cx="19" cy="16" r="1.1"></circle><circle cx="24" cy="16" r="1.1"></circle>
+      <circle cx="6.5" cy="19" r="1.1"></circle><circle cx="11.5" cy="19" r="1.1"></circle><circle cx="16.5" cy="19" r="1.1"></circle><circle cx="21.5" cy="19" r="1.1"></circle>
+    </g>
+  </g>
+  <circle cx="32" cy="32" r="30" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2"></circle>
+</svg>

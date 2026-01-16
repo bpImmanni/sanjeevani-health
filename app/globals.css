@@ -1,55 +1,76 @@
 @import "tailwindcss";
-/* Ensure flag emojis render on Windows + Chrome */
-.emoji,
-.twemoji,
-.emoji-font {
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", system-ui, sans-serif;
-}
 
+/* Smooth scrolling */
 html { scroll-behavior: smooth; }
-* { box-sizing: border-box; }
-html, body { height: 100%; }
-body { margin: 0; }
 
-body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
-    "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+/* Base theme */
+:root{
+  --bg: #050814;
+  --panel: rgba(255,255,255,0.05);
+  --panel2: rgba(255,255,255,0.07);
+  --stroke: rgba(255,255,255,0.10);
+  --textDim: rgba(255,255,255,0.72);
+  --goldA: rgba(255, 199, 95, 0.90);
+  --goldB: rgba(255, 170, 60, 0.70);
+  --emerald: rgba(52, 211, 153, 1);
 }
 
-
-body {
-  background: #050814;
-  color: white;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji",
-    "Segoe UI Emoji", "Noto Color Emoji";
-}
-
-a { color: inherit; text-decoration: none; }
-a:hover { text-decoration: none; }
-
-::selection {
-  background: rgba(255, 187, 80, 0.28);
+body{
+  background:
+    radial-gradient(1200px 700px at 20% 10%, rgba(255,187,80,0.12), transparent 60%),
+    radial-gradient(900px 600px at 80% 20%, rgba(0,255,200,0.08), transparent 60%),
+    var(--bg);
   color: white;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
-::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.18);
-  border-radius: 999px;
+/* ---------- Hanuman watermark background (MOST IMPORTANT) ---------- */
+.hanuman-bg{
+  position: absolute;
+  inset: 0;
+  background-image: url("/human-hero.png"); /* <-- your file in /public */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(1100px, 85vw);
+  opacity: 0.16;                 /* visible but subtle */
+  filter: saturate(1.15) contrast(1.05);
+  mix-blend-mode: screen;        /* gives golden glow feel */
+  pointer-events: none;
+  z-index: 0;
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.26); }
+.hanuman-vignette{
+  position:absolute;
+  inset:0;
+  background: radial-gradient(80% 60% at 50% 35%, transparent 0%, rgba(5,8,20,0.42) 55%, rgba(5,8,20,0.80) 100%);
+  pointer-events:none;
+  z-index: 1;
+}
 
-/* Particles */
+/* ---------- Premium UI helpers ---------- */
+.glass{
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  border: 1px solid var(--stroke);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+  backdrop-filter: blur(10px);
+}
+.card3d{
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  box-shadow: 0 18px 55px rgba(0,0,0,0.40);
+  backdrop-filter: blur(10px);
+}
+.chip{
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+}
+
+/* ---------- Particles ---------- */
 @keyframes floaty {
   0% { transform: translateY(0); opacity: 0.35; }
   50% { transform: translateY(-12px); opacity: 0.75; }
   100% { transform: translateY(0); opacity: 0.35; }
 }
-.particle {
-  position: absolute;
+.particle{
+  position:absolute;
   width: 6px;
   height: 6px;
   border-radius: 999px;
@@ -58,137 +79,63 @@ a:hover { text-decoration: none; }
   filter: blur(0.4px);
 }
 
-/* AI scan overlay */
-.ai-scan {
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255,255,255,0.06) 35%,
-    rgba(0,255,200,0.06) 50%,
-    rgba(255,187,80,0.05) 65%,
-    transparent 100%
-  );
-  background-size: 200% 200%;
-  animation: aiScan 4.8s ease-in-out infinite;
+/* ---------- AI scan shimmer used in badges/buttons ---------- */
+@keyframes scanSweep {
+  0% { transform: translateX(-120%); opacity: 0; }
+  10% { opacity: .55; }
+  50% { opacity: .35; }
+  100% { transform: translateX(120%); opacity: 0; }
 }
-@keyframes aiScan {
-  0% { transform: translateX(-18%); opacity: 0.35; }
-  50% { transform: translateX(18%); opacity: 0.55; }
-  100% { transform: translateX(-18%); opacity: 0.35; }
-}
-
-/* Subtle AI grid overlay */
-.grid-overlay {
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(circle at 50% 40%, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
-}
-
-/* Emoji flags rendering */
-.flag-emoji {
-  font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
-  font-size: 16px;
-  line-height: 1;
-}
-
-/* Typing dots */
-.typing-dots::after {
-  content: "···";
-  display: inline-block;
-  letter-spacing: 2px;
-  animation: dots 1.2s infinite;
-  opacity: 0.8;
-}
-@keyframes dots {
-  0% { transform: translateY(0px); opacity: .35; }
-  50% { transform: translateY(-1px); opacity: 1; }
-  100% { transform: translateY(0px); opacity: .35; }
-}
-
-/* DEBUG SAFETY: if any anchor/button is empty, show outline so “white bars” are obvious */
-a:empty, button:empty {
-  outline: 2px dashed rgba(255, 80, 80, 0.8);
-  min-width: 120px;
-  min-height: 38px;
-  display: inline-block;
-}
-
-/* Twemoji sizing (flags always visible on Windows) */
-.twemoji {
-  display: inline-block;
-  height: 1.05em;
-  width: 1.05em;
-  vertical-align: -0.18em;
-  filter: saturate(1.05);
-}
-
-/* Hanuman watermark — uses your /public/human-hero.png or /public/hanuman-watermark.png */
-.hanuman-bg{
-  background-image: url("/human-hero.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: min(980px, 92vw);
-  opacity: 0.18;
-  filter: contrast(112%) saturate(110%);
-  mix-blend-mode: screen; /* helps gold feel */
-}
-
-/* AI scanline shimmer */
 .ai-scan{
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(0,255,200,0.06) 35%,
-    rgba(255,187,80,0.06) 55%,
-    transparent 75%
-  );
-  transform: translateX(-35%);
-  animation: aiScan 5.2s ease-in-out infinite;
-}
-@keyframes aiScan{
-  0%{ transform: translateX(-40%); opacity: .35; }
-  50%{ transform: translateX(15%); opacity: .7; }
-  100%{ transform: translateX(40%); opacity: .35; }
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 35%, rgba(255,255,255,0.10) 50%, transparent 100%);
+  transform: translateX(-120%);
+  animation: scanSweep 5.3s ease-in-out infinite;
 }
 
-/* tiny “agent online” dot */
+/* ---------- Agent badge micro-interactions ---------- */
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.55); opacity: 1; }
+}
 .ai-dot{
-  height: 8px; width: 8px; border-radius: 999px;
-  background: rgba(0,255,200,0.85);
-  box-shadow: 0 0 18px rgba(0,255,200,0.55);
-  animation: pulseDot 1.6s ease-in-out infinite;
-}
-@keyframes pulseDot{
-  0%,100%{ transform: scale(1); opacity: .9; }
-  50%{ transform: scale(1.35); opacity: .6; }
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(52,211,153,0.95);
+  box-shadow: 0 0 18px rgba(52,211,153,0.40);
+  animation: pulseDot 1.3s ease-in-out infinite;
 }
 
-/* subtle hologram on FlightPath canvas */
-.ai-holo{
-  background:
-    radial-gradient(500px 220px at 30% 30%, rgba(0,255,200,0.06), transparent 60%),
-    radial-gradient(420px 240px at 75% 60%, rgba(255,187,80,0.05), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
-  opacity: .85;
+/* ---------- MythBuster GOLD button (bring it back) ---------- */
+@keyframes goldShine {
+  0% { transform: translateX(-120%); opacity: 0; }
+  12% { opacity: .85; }
+  50% { opacity: .28; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+.mythbtn{
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 208, 140, 0.35);
+  background: linear-gradient(180deg, rgba(255, 199, 95, 0.20), rgba(255, 170, 60, 0.10));
+  color: rgba(255, 236, 205, 0.95);
+  box-shadow: 0 22px 70px rgba(255, 170, 60, 0.14);
+}
+.mythbtn::before{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.30), transparent);
+  transform: translateX(-120%);
+  animation: goldShine 3.8s ease-in-out infinite;
+}
+.mythbtn:hover{
+  background: linear-gradient(180deg, rgba(255, 199, 95, 0.26), rgba(255, 170, 60, 0.14));
 }
 
-/* premium depth feel */
-.card3d{
-  transform: translateZ(0);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+/* Fix “white box / blank button” issue:
+   usually caused by text inheriting wrong color or overlay sitting above text */
+.btnPrimary{
+  background: white;
+  color: #050814;
 }
-.card3d:hover{
-  transform: translateY(-2px);
-  border-color: rgba(255,255,255,0.14);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-}
-.chip3d{
-  transition: transform .2s ease, background-color .2s ease, border-color .2s ease;
-}
-.chip3d:hover{
-  transform: translateY(-1px);
-  background: rgba(255,255,255,0.08);
-  border-color: rgba(255,255,255,0.16);
-}
+.btnPrimary:hover{ opacity: .92; }

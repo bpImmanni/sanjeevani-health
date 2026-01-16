@@ -1,70 +1,56 @@
+// components/AgentConsole.tsx
 "use client";
 
-import { Bot, Sparkles, ShieldCheck, Clock3 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Sparkles } from "lucide-react";
+
+type Line = { role: "user" | "agent"; text: string };
+
+const script: Line[] = [
+  { role: "user", text: "I have knee pain. I want the best hospital in Hyderabad." },
+  { role: "agent", text: "Received. Upload reports when ready — I’ll start with a preliminary shortlist now." },
+  { role: "agent", text: "Analyzing symptoms + goals… ✅" },
+  { role: "agent", text: "Shortlisting top orthopedic surgeons… ✅" },
+  { role: "agent", text: "Estimating cost range + timelines… ✅" },
+  { role: "agent", text: "Scheduling consult options: Tue 9:00 AM / Wed 6:30 PM" },
+];
 
 export default function AgentConsole() {
+  const [lines, setLines] = useState<Line[]>([]);
+  const [i, setI] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setLines((prev) => {
+        if (i >= script.length) return prev;
+        return [...prev, script[i]];
+      });
+      setI((x) => x + 1);
+    }, 900);
+    return () => clearInterval(id);
+  }, [i]);
+
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#070b1f] p-6">
-      <div className="pointer-events-none absolute inset-0 opacity-50 ai-scan" />
-      <div className="pointer-events-none absolute inset-0 grid-overlay opacity-30" />
-
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
-            <Bot className="h-5 w-5 text-white/85" />
-          </div>
-          <div>
-            <div className="text-sm font-semibold text-white/90">AI Care Agent</div>
-            <div className="text-xs text-white/60">Personal facilitator for India care</div>
-          </div>
+    <div className="console card3d">
+      <div className="console__top">
+        <div className="console__title">
+          <Sparkles className="h-4 w-4" />
+          AI Agent Console
         </div>
-
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/70">
-          <span className="h-2 w-2 rounded-full bg-emerald-400/80 shadow-[0_0_18px_rgba(52,211,153,0.45)]" />
-          active
+        <div className="console__status">
+          <span className="ai-dot" />
+          processing
         </div>
       </div>
 
-      {/* “messages” */}
-      <div className="mt-5 space-y-3">
-        <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-white/75">
-          <span className="text-white/90 font-medium">You:</span> I need options for treatment in India.
-        </div>
-
-        <div className="rounded-xl border border-white/10 bg-gradient-to-b from-white/10 to-white/0 p-3 text-sm text-white/80">
-          <div className="flex items-center gap-2 text-white/90 font-medium">
-            <Sparkles className="h-4 w-4" />
-            Agent
-            <span className="typing-dots ml-1" aria-hidden />
+      <div className="console__body">
+        {lines.map((l, idx) => (
+          <div key={idx} className={`console__line ${l.role === "user" ? "isUser" : "isAgent"}`}>
+            <span className="console__role">{l.role === "user" ? "You" : "Agent"}</span>
+            <span className="console__text">{l.text}</span>
           </div>
-          <div className="mt-1 text-white/70">
-            Upload reports → I’ll shortlist 2–3 vetted hospitals + estimate cost + timeline.
-          </div>
-        </div>
-
-        <div className="grid gap-3 md:grid-cols-3">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-            <div className="flex items-center gap-2 text-xs text-white/70">
-              <Clock3 className="h-4 w-4 text-white/70" />
-              Response window
-            </div>
-            <div className="mt-1 text-sm font-semibold">24 hours</div>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-            <div className="flex items-center gap-2 text-xs text-white/70">
-              <ShieldCheck className="h-4 w-4 text-white/70" />
-              Hospital trust
-            </div>
-            <div className="mt-1 text-sm font-semibold">JCI / NABH</div>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-            <div className="flex items-center gap-2 text-xs text-white/70">
-              <Sparkles className="h-4 w-4 text-white/70" />
-              Coordination
-            </div>
-            <div className="mt-1 text-sm font-semibold">End-to-end</div>
-          </div>
-        </div>
+        ))}
+        <div className="console__cursor" />
       </div>
     </div>
   );
