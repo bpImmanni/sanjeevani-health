@@ -2,105 +2,114 @@
 
 export default function FlightPath() {
   return (
-    <div className="relative rounded-2xl border border-white/10 bg-white/5 p-4 overflow-hidden">
-      {/* Top row (flags + routing status) */}
-      <div className="flex items-center justify-between gap-3">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/80">
-          <span className="flag-emoji" aria-hidden>
-            🇺🇸
-          </span>
-          <span className="text-white/50">→</span>
-          <span className="flag-emoji" aria-hidden>
-            🇮🇳
+    <div className="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+      {/* header row */}
+      <div className="mb-3 flex items-center justify-between">
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">
+          <span className="text-base leading-none">🇺🇸</span>
+          <span className="text-white/40">→</span>
+          <span className="text-base leading-none">🇮🇳</span>
+          <span className="ml-1 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2 py-0.5 text-[11px] text-emerald-200">
+            live route
           </span>
         </div>
 
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/70">
-          <span className="h-2 w-2 rounded-full bg-emerald-400/80 shadow-[0_0_18px_rgba(52,211,153,0.45)]" />
-          live routing
-        </div>
+        {/* moved agent online out of here per your ask */}
+        <div className="text-[11px] text-white/45">coordinated by your AI agent</div>
       </div>
 
-      {/* Flight panel */}
-      <div className="mt-4 relative rounded-xl border border-white/10 bg-[#070b1f]/45 p-4 overflow-hidden">
-        {/* AI scan overlay */}
-        <div className="pointer-events-none absolute inset-0 opacity-60 ai-scan" />
+      {/* the map canvas */}
+      <div className="relative rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent p-3">
+        {/* subtle hologram */}
+        <div className="ai-holo pointer-events-none absolute inset-0 rounded-xl" />
 
         <svg
-          className="w-full h-[170px]"
-          viewBox="0 0 640 220"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 640 240"
+          className="block h-[170px] w-full"
+          aria-label="Flight path animation"
         >
-          {/* soft glow */}
-          <path
-            d="M60 170 C 210 60, 430 60, 580 170"
-            stroke="rgba(255,255,255,0.10)"
-            strokeWidth="10"
-            strokeLinecap="round"
-          />
-          {/* dotted route */}
-          <path
-            id="routePath"
-            d="M60 170 C 210 60, 430 60, 580 170"
-            stroke="rgba(255,255,255,0.55)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeDasharray="6 8"
-          />
-
-          {/* endpoints */}
-          <circle cx="60" cy="170" r="6" fill="rgba(255,255,255,0.75)" />
-          <circle cx="580" cy="170" r="6" fill="rgba(255,255,255,0.75)" />
-
-          {/* moving plane */}
-          <g filter="url(#shadow)">
-            <text fontSize="18" dominantBaseline="middle" textAnchor="middle">
-              ✈️
-              <animateMotion
-                dur="3.4s"
-                repeatCount="indefinite"
-                rotate="auto"
-                keyTimes="0; 1"
-                keySplines="0.42 0 0.58 1"
-                calcMode="spline"
-              >
-                <mpath href="#routePath" />
-              </animateMotion>
-            </text>
-          </g>
-
+          {/* glow backdrop */}
           <defs>
-            <filter
-              id="shadow"
-              x="-50%"
-              y="-50%"
-              width="200%"
-              height="200%"
-            >
-              <feDropShadow
-                dx="0"
-                dy="0"
-                stdDeviation="3"
-                floodColor="rgba(255,255,255,0.25)"
-              />
+            <linearGradient id="route" x1="0" x2="1">
+              <stop offset="0" stopColor="rgba(255,255,255,0.20)" />
+              <stop offset="0.5" stopColor="rgba(255,255,255,0.50)" />
+              <stop offset="1" stopColor="rgba(255,255,255,0.20)" />
+            </linearGradient>
+
+            <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
             </filter>
           </defs>
+
+          {/* endpoints */}
+          <circle cx="80" cy="170" r="6" fill="rgba(255,255,255,0.55)" />
+          <circle cx="560" cy="170" r="6" fill="rgba(255,255,255,0.55)" />
+
+          {/* dashed arc */}
+          <path
+            id="flightArc"
+            d="M 80 170 C 220 65, 420 65, 560 170"
+            fill="none"
+            stroke="url(#route)"
+            strokeWidth="2.2"
+            strokeDasharray="4.5 5"
+            strokeLinecap="round"
+            filter="url(#softGlow)"
+            opacity="0.85"
+          />
+
+          {/* moving plane (SVG SMIL animateMotion) */}
+          <g filter="url(#softGlow)">
+            <g>
+              {/* simple plane icon */}
+              <path
+                d="M 0 -6 L 30 0 L 0 6 L 6 0 Z"
+                fill="rgba(180, 255, 240, 0.95)"
+              />
+              <path
+                d="M 6 0 L -10 -10"
+                stroke="rgba(180, 255, 240, 0.95)"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M 6 0 L -10 10"
+                stroke="rgba(180, 255, 240, 0.95)"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <animateMotion dur="3.6s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#flightArc" />
+              </animateMotion>
+            </g>
+          </g>
+
+          {/* subtle moving “pulse dot” */}
+          <circle r="4.8" fill="rgba(0,255,200,0.35)">
+            <animateMotion dur="3.6s" repeatCount="indefinite">
+              <mpath href="#flightArc" />
+            </animateMotion>
+          </circle>
         </svg>
 
-        <div className="mt-2 text-xs text-white/60">
-          Your agent guides the journey end-to-end — with clarity, speed, and trust.
+        <div className="mt-2 text-xs text-white/55">
+          Your AI agent routes:{" "}
+          <span className="text-white/75">Consult → Options → Travel → Treatment → Follow-up</span>
         </div>
       </div>
 
-      {/* Steps (moved to bottom as chips) */}
-      <div className="mt-4 flex flex-wrap gap-2">
-        {["Consult", "Options", "Travel", "Treatment", "Follow-up"].map((s) => (
+      {/* 3D-ish chips */}
+      <div className="mt-3 flex flex-wrap gap-2">
+        {["Case review", "Hospital shortlist", "Cost estimate", "Booking", "Follow-up"].map((t) => (
           <span
-            key={s}
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/70"
+            key={t}
+            className="chip3d inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/75"
           >
-            {s}
+            {t}
           </span>
         ))}
       </div>

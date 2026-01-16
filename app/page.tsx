@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 import Reveal from "../components/Reveal";
 import FlightPath from "../components/FlightPath";
-import AgentConsole from "../components/AgentConsole";
 import CostCard from "../components/CostCard";
+
 import {
   HeartPulse,
   Bone,
@@ -11,30 +13,37 @@ import {
   BadgeCheck,
   Sparkles,
   Bot,
+  Wand2,
+  MessageSquareText,
+  CalendarCheck,
+  ScanSearch,
 } from "lucide-react";
 
 export default function Home() {
   return (
     <main className="relative min-h-screen text-white">
-      {/* Background */}
+      {/* ===== Background (base + glow + Hanuman watermark) ===== */}
       <div className="pointer-events-none fixed inset-0 -z-20">
         <div className="absolute inset-0 bg-[#050814]" />
-        <div className="absolute inset-0 opacity-80 bg-[radial-gradient(900px_600px_at_20%_10%,rgba(255,187,80,0.14),transparent_60%),radial-gradient(900px_600px_at_80%_20%,rgba(0,255,200,0.09),transparent_60%)]" />
+        <div className="absolute inset-0 opacity-70 bg-[radial-gradient(900px_600px_at_20%_10%,rgba(255,187,80,0.14),transparent_60%),radial-gradient(900px_600px_at_80%_15%,rgba(0,255,200,0.10),transparent_60%)]" />
+
+        {/* Big centered watermark (your file in /public) */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 opacity-[0.22] mix-blend-screen"
           style={{
             backgroundImage: "url('/human-hero.png')",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
-            backgroundSize: "min(820px, 70vw)",
-            opacity: 0.18,
-            filter: "saturate(1.05) contrast(1.05)",
+            backgroundSize: "min(920px, 85vw)",
+            filter: "saturate(115%) contrast(115%)",
           }}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(900px_600px_at_50%_35%,transparent_35%,rgba(5,8,20,0.75)_70%,rgba(5,8,20,0.92)_100%)]" />
+
+        {/* extra vignette to keep it premium */}
+        <div className="absolute inset-0 bg-[radial-gradient(1200px_800px_at_50%_45%,transparent_40%,rgba(0,0,0,0.55)_75%)]" />
       </div>
 
-      {/* NAVBAR */}
+      {/* ===== NAVBAR ===== */}
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#050814]/70 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
           <div className="flex items-center gap-3">
@@ -61,15 +70,16 @@ export default function Home() {
 
           <a
             href="#contact"
-            className="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-[#050814] hover:opacity-90"
+            className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-[#050814] hover:opacity-90"
           >
             Let us contact you
           </a>
         </div>
       </header>
 
-      {/* HERO */}
+      {/* ===== HERO ===== */}
       <section className="relative overflow-hidden">
+        {/* Particles */}
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="particle left-[10%] top-[20%]" />
           <div className="particle left-[25%] top-[60%] [animation-delay:1s]" />
@@ -82,70 +92,89 @@ export default function Home() {
           <div>
             <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/80">
               <span className="h-2 w-2 rounded-full bg-amber-200/70" />
-              Myth-inspired care. AI-powered coordination.
+              Myth-inspired mission. AI-powered care coordination.
             </p>
 
             <h1 className="text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-              Talk to your personal <span className="text-white">AI Care Agent</span>{" "}
-              to get treatment in India — faster, clearer, and trusted.
+              Talk to your personal{" "}
+              <span className="text-white">AI Care Agent</span>{" "}
+              — it handles the hospital search, cost, and bookings.
             </h1>
 
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white/75">
-              Sanjeevani Health pairs you with an AI Care Agent that reviews your case,
-              shortlists vetted hospitals, compares costs, and coordinates your journey —
-              from first call to follow-up.
+              We don’t make you “use another app.” You chat with an agent.
+              It reads your case, recommends best-fit doctors and hospitals,
+              schedules consults, and coordinates the journey end-to-end.
             </p>
 
-            {/* CTAs — hard fix for “white bars”: always visible text */}
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-[#050814] hover:opacity-90"
+                className="group inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-[#050814] hover:opacity-90"
               >
                 <Sparkles className="h-4 w-4" />
                 Talk to an Agent
               </a>
+
               <a
                 href="#agent"
-                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10"
+                className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10"
               >
                 See how the agent works
               </a>
+
+              <Link
+                href="/mythbuster"
+                className="rounded-xl border border-amber-200/25 bg-amber-200/10 px-5 py-3 text-sm font-semibold text-amber-100 hover:bg-amber-200/15"
+              >
+                Try MythBuster free
+              </Link>
             </div>
 
             <div className="mt-8 grid grid-cols-3 gap-4 text-left">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="card3d rounded-2xl border border-white/10 bg-white/5 p-4">
                 <div className="text-2xl font-semibold">24h</div>
                 <div className="mt-1 text-xs text-white/70">Initial review</div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="card3d rounded-2xl border border-white/10 bg-white/5 p-4">
                 <div className="text-2xl font-semibold">2–3</div>
                 <div className="mt-1 text-xs text-white/70">Care options</div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="card3d rounded-2xl border border-white/10 bg-white/5 p-4">
                 <div className="text-2xl font-semibold">70–90%</div>
                 <div className="mt-1 text-xs text-white/70">Typical savings</div>
               </div>
             </div>
           </div>
 
-          {/* Right hero panel */}
+          {/* Right panel */}
           <div className="relative">
             <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/10 to-white/0 p-6">
               <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#070b1f] p-6">
-                <div className="ai-scan pointer-events-none absolute inset-0 opacity-50" />
+                <div className="ai-scan pointer-events-none absolute inset-0 opacity-60" />
 
-                <div className="text-sm font-semibold text-white/90">
-                  Sanjeevani Signal
+                <div className="flex items-center justify-between gap-3">
+                  <div className="text-sm font-semibold text-white/90">
+                    Sanjeevani Signal
+                  </div>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-100">
+                    <span className="ai-dot" />
+                    Agent active
+                  </span>
                 </div>
 
                 <p className="mt-2 text-sm text-white/70">
                   Your agent coordinates hospitals, estimates, and logistics — so you don’t have to.
                 </p>
 
+                {/* Flight */}
                 <div className="mt-5">
                   <FlightPath />
                 </div>
+
+                <p className="mt-4 text-xs text-white/55">
+                  Premium AI facilitation for a real-world mission: accessible, affordable care.
+                </p>
               </div>
             </div>
 
@@ -162,32 +191,16 @@ export default function Home() {
           </h2>
           <p className="mt-3 max-w-3xl text-white/75 leading-relaxed">
             In the US, the biggest barriers are time, cost, and coordination.
-            When treatment is delayed, outcomes can worsen. When costs are unpredictable,
-            families hesitate.
+            When treatment is delayed, outcomes can worsen. When costs are unpredictable, families hesitate.
           </p>
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {[
-              {
-                title: "Wait times",
-                desc: "Specialists, procedures, and approvals can take weeks.",
-                icon: <Clock3 className="h-5 w-5 text-white/85" />,
-              },
-              {
-                title: "High cost",
-                desc: "Even with insurance, out-of-pocket costs can be heavy.",
-                icon: <HeartPulse className="h-5 w-5 text-white/85" />,
-              },
-              {
-                title: "Complex coordination",
-                desc: "Reports, travel, hospital selection — overwhelming alone.",
-                icon: <ShieldCheck className="h-5 w-5 text-white/85" />,
-              },
+              { title: "Wait times", desc: "Specialists, procedures, and approvals can take weeks.", icon: <Clock3 className="h-5 w-5 text-white/85" /> },
+              { title: "High cost", desc: "Even with insurance, out-of-pocket costs can be heavy.", icon: <HeartPulse className="h-5 w-5 text-white/85" /> },
+              { title: "Complex coordination", desc: "Reports, travel, hospital selection — overwhelming alone.", icon: <ShieldCheck className="h-5 w-5 text-white/85" /> },
             ].map((x) => (
-              <div
-                key={x.title}
-                className="rounded-2xl border border-white/10 bg-white/5 p-6"
-              >
+              <div key={x.title} className="card3d rounded-2xl border border-white/10 bg-white/5 p-6">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
                     {x.icon}
@@ -201,46 +214,63 @@ export default function Home() {
         </section>
       </Reveal>
 
-      {/* AGENT-FIRST SECTION */}
+      {/* AGENT */}
       <Reveal>
         <section id="agent" className="mx-auto max-w-6xl px-5 pb-16">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
             <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
-              Agent-first care, not an app
+              AI Agent first — you chat, the agent handles everything
             </h2>
             <p className="mt-3 max-w-3xl text-white/75">
-              You don’t need to navigate hospitals and logistics alone. Your AI Care Agent
-              handles the complexity — you get clarity, speed, and trusted options.
+              Our agent reads your case, recommends best-fit doctors, schedules consults, and coordinates end-to-end.
+              You stay informed, but you don’t do the busywork.
             </p>
 
+            <div className="mt-8 grid gap-4 md:grid-cols-4">
+              {[
+                { title: "Reads your case", desc: "Understands reports + goals.", icon: <ScanSearch className="h-5 w-5 text-white/85" /> },
+                { title: "Recommends doctors", desc: "Best match for your condition.", icon: <Wand2 className="h-5 w-5 text-white/85" /> },
+                { title: "Chats with you", desc: "Preferences, timing, comfort.", icon: <MessageSquareText className="h-5 w-5 text-white/85" /> },
+                { title: "Books & coordinates", desc: "Consults, travel, follow-up.", icon: <CalendarCheck className="h-5 w-5 text-white/85" /> },
+              ].map((x) => (
+                <div key={x.title} className="card3d rounded-2xl border border-white/10 bg-[#070b1f] p-6">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+                      {x.icon}
+                    </div>
+                    <div className="text-base font-semibold">{x.title}</div>
+                  </div>
+                  <div className="mt-3 text-sm text-white/70">{x.desc}</div>
+                </div>
+              ))}
+            </div>
+
             <div className="mt-8 grid gap-4 md:grid-cols-2">
-              <AgentConsole />
-
-              <div className="rounded-2xl border border-white/10 bg-[#070b1f] p-6">
-                <div className="text-sm font-semibold text-white/90">
-                  What your agent does
+              <div className="card3d relative overflow-hidden rounded-2xl border border-amber-200/20 bg-amber-200/10 p-6">
+                <div className="absolute inset-0 opacity-40 ai-scan pointer-events-none" />
+                <div className="flex items-center gap-2 text-amber-100">
+                  <Sparkles className="h-4 w-4" />
+                  <div className="text-sm font-semibold">MythBuster (free)</div>
                 </div>
-                <div className="mt-4 space-y-3 text-sm text-white/70">
-                  <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-                    1) Reviews your reports and case summary
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-                    2) Shortlists 2–3 vetted hospitals (JCI/NABH)
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-                    3) Shares cost ranges and timelines upfront
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-                    4) Coordinates travel, admission, and follow-ups
-                  </div>
-                </div>
+                <p className="mt-2 text-sm text-white/75">
+                  Tell it anything you believe about health. It explains what’s true, what’s false, and why —
+                  with simple reasoning.
+                </p>
 
-                <a
-                  href="#contact"
-                  className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-[#050814] hover:opacity-90"
+                <Link
+                  href="/mythbuster"
+                  className="mt-5 inline-flex w-fit items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-[#050814] hover:opacity-90"
                 >
-                  Start with an Agent
-                </a>
+                  Try MythBuster free
+                </Link>
+              </div>
+
+              <div className="card3d rounded-2xl border border-white/10 bg-[#070b1f] p-6">
+                <div className="text-sm font-semibold text-white/90">What makes this unique</div>
+                <p className="mt-2 text-sm text-white/70">
+                  Traditional apps make you click through forms. Our AI agent acts like a facilitator:
+                  it reads, recommends, coordinates, and keeps you updated — while you focus on health.
+                </p>
               </div>
             </div>
           </div>
@@ -252,35 +282,20 @@ export default function Home() {
         <section id="solution" className="mx-auto max-w-6xl px-5 pb-16">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
             <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
-              Our solution: trusted care in India, coordinated end-to-end
+              Our solution: AI Agent + trusted care in India
             </h2>
             <p className="mt-3 max-w-3xl text-white/75">
-              We help you choose vetted hospitals, get clear estimates, coordinate travel and care,
-              and stay supported after treatment.
+              We shortlist vetted hospitals, provide transparent cost ranges, and coordinate travel and follow-ups —
+              powered by your personal AI Care Agent.
             </p>
 
             <div className="mt-8 grid gap-4 md:grid-cols-3">
               {[
-                {
-                  title: "Vetted options",
-                  desc: "2–3 hospital options aligned to your case.",
-                  icon: <BadgeCheck className="h-5 w-5 text-white/85" />,
-                },
-                {
-                  title: "Transparent cost",
-                  desc: "Indicative ranges upfront before you travel.",
-                  icon: <ShieldCheck className="h-5 w-5 text-white/85" />,
-                },
-                {
-                  title: "End-to-end support",
-                  desc: "Travel, logistics, follow-ups — coordinated.",
-                  icon: <Clock3 className="h-5 w-5 text-white/85" />,
-                },
+                { title: "Vetted options", desc: "2–3 hospital options aligned to your case.", icon: <BadgeCheck className="h-5 w-5 text-white/85" /> },
+                { title: "Transparent cost", desc: "Indicative ranges upfront before you travel.", icon: <ShieldCheck className="h-5 w-5 text-white/85" /> },
+                { title: "End-to-end support", desc: "Travel, logistics, follow-ups — coordinated.", icon: <Clock3 className="h-5 w-5 text-white/85" /> },
               ].map((x) => (
-                <div
-                  key={x.title}
-                  className="rounded-2xl border border-white/10 bg-[#070b1f] p-6"
-                >
+                <div key={x.title} className="card3d rounded-2xl border border-white/10 bg-[#070b1f] p-6">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
                       {x.icon}
@@ -303,34 +318,13 @@ export default function Home() {
               Cost comparison (India vs USA)
             </h2>
             <p className="mt-3 max-w-3xl text-white/75">
-              Professional, scan-friendly comparison. Exact prices vary; these are indicative ranges.
+              Scan-friendly comparison. Exact prices vary; these are indicative ranges.
             </p>
 
             <div className="mt-8 grid gap-4 md:grid-cols-3">
-              <CostCard
-                title="CABG (Heart Bypass)"
-                icon={<HeartPulse className="h-5 w-5 text-white/85" />}
-                india="$10k–$20k"
-                usa="$80k–$200k"
-                indiaPct={20}
-                usaPct={90}
-              />
-              <CostCard
-                title="Knee Replacement"
-                icon={<Bone className="h-5 w-5 text-white/85" />}
-                india="$7k–$15k"
-                usa="$30k–$70k"
-                indiaPct={18}
-                usaPct={70}
-              />
-              <CostCard
-                title="Liver Transplant"
-                icon={<Syringe className="h-5 w-5 text-white/85" />}
-                india="$30k–$60k"
-                usa="$200k–$300k+"
-                indiaPct={25}
-                usaPct={95}
-              />
+              <CostCard title="CABG (Heart Bypass)" icon={<HeartPulse className="h-5 w-5 text-white/85" />} india="$10k–$20k" usa="$80k–$200k" indiaPct={20} usaPct={90} />
+              <CostCard title="Knee Replacement" icon={<Bone className="h-5 w-5 text-white/85" />} india="$7k–$15k" usa="$30k–$70k" indiaPct={18} usaPct={70} />
+              <CostCard title="Liver Transplant" icon={<Syringe className="h-5 w-5 text-white/85" />} india="$30k–$60k" usa="$200k–$300k+" indiaPct={25} usaPct={95} />
             </div>
 
             <div className="mt-6 text-xs text-white/50">
@@ -353,7 +347,7 @@ export default function Home() {
               { title: "Privacy-first", desc: "Consent-based handling of sensitive information." },
               { title: "Continuity of care", desc: "Coordination from consult to follow-up." },
             ].map((x) => (
-              <div key={x.title} className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <div key={x.title} className="card3d rounded-2xl border border-white/10 bg-white/5 p-6">
                 <div className="text-lg font-semibold">{x.title}</div>
                 <div className="mt-2 text-sm text-white/70">{x.desc}</div>
               </div>
@@ -374,7 +368,7 @@ export default function Home() {
             </p>
 
             <div className="mt-8 grid gap-4 md:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-[#070b1f] p-6">
+              <div className="card3d rounded-2xl border border-white/10 bg-[#070b1f] p-6">
                 <div className="text-sm font-semibold">Contact</div>
                 <div className="mt-4 space-y-2 text-sm text-white/75">
                   <div><span className="text-white/60">Email:</span> your-email@domain.com</div>
@@ -384,7 +378,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div id="contact" className="rounded-2xl border border-white/10 bg-[#070b1f] p-6">
+              <div id="contact" className="card3d rounded-2xl border border-white/10 bg-[#070b1f] p-6">
                 <div className="text-sm font-semibold">Let us contact you</div>
                 <p className="mt-2 text-sm text-white/70">
                   Share your details and we’ll call you back.
