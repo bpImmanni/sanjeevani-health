@@ -1,31 +1,37 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function Reveal({ children }: { children: React.ReactNode }) {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [shown, setShown] = useState(false);
 
-  // "once: false" is the KEY: it re-animates whenever it comes back in view
-  const inView = useInView(ref, {
-    amount: 0.2,
-    once: false,
-    margin: "0px 0px -10% 0px",
-  });
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShown(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   return (
-    <div ref={ref}>
-      <motion.div
-        initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
-        animate={
-          inView
-            ? { opacity: 1, y: 0, filter: "blur(0px)" }
-            : { opacity: 0, y: 18, filter: "blur(6px)" }
-        }
-        transition={{ duration: 0.55, ease: "easeOut" }}
-      >
-        {children}
-      </motion.div>
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${
+        shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+      }`}
+    >
+      {children}
     </div>
   );
 }
