@@ -18,7 +18,90 @@ import {
   MessageSquareText,
   CalendarCheck,
   ScanSearch,
+  Stethoscope,
+  AlertTriangle,
 } from "lucide-react";
+
+/** ---------- Helpers: PNG Icon badge (keeps layout stable) ---------- */
+function IconBadge({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+      <img
+        src={src}
+        alt={alt}
+        className="h-7 w-7 object-contain opacity-95"
+        draggable={false}
+      />
+    </div>
+  );
+}
+
+function DisclaimerInline() {
+  return (
+    <div className="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-white/70 leading-relaxed">
+      <div className="flex items-start gap-2">
+        <AlertTriangle className="mt-0.5 h-4 w-4 text-amber-200/90" />
+        <div>
+          <span className="font-semibold text-white/85">Important:</span> Sanjeevani Health provides
+          coordination and informational support — <span className="text-white/85">not medical advice</span>.
+          For emergencies, call <span className="text-white/85">911</span> (US) or your local emergency number.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** ---------- Trust strip: now uses your generated icons ---------- */
+function TrustStrip() {
+  return (
+    <div className="mt-8 grid gap-3 md:grid-cols-3">
+      <div className="card3d rounded-2xl p-4">
+        <div className="flex items-center gap-2 text-sm font-semibold">
+          <img
+            src="/public/icons/privacy-lock.png"
+            alt="Privacy-first"
+            className="h-4 w-4 object-contain opacity-95"
+            draggable={false}
+          />
+          Privacy-first
+        </div>
+        <div className="mt-1 text-xs text-white/70">
+          Patient data isn’t shared anywhere unless you explicitly permit it.
+        </div>
+      </div>
+
+      <div className="card3d rounded-2xl p-4">
+        <div className="flex items-center gap-2 text-sm font-semibold">
+          <img
+            src="/public/icons/audit-log.png"
+            alt="Access audit logs"
+            className="h-4 w-4 object-contain opacity-95"
+            draggable={false}
+          />
+          Access audit logs
+        </div>
+        <div className="mt-1 text-xs text-white/70">
+          We maintain an audit trail of who accessed records and when (for authorized users).
+        </div>
+      </div>
+
+      <div className="card3d rounded-2xl p-4">
+        <div className="flex items-center gap-2 text-sm font-semibold">
+          <img
+            src="/public/icons/hipaa-badge.png"
+            alt="HIPAA aligned"
+            className="h-4 w-4 object-contain opacity-95"
+            draggable={false}
+          />
+          HIPAA aligned
+        </div>
+        <div className="mt-1 text-xs text-white/70">
+          Designed for HIPAA compliance with consent-based workflows and least-privilege access.
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
@@ -50,10 +133,7 @@ export default function Home() {
             <a className="hover:text-white" href="#team">Team</a>
           </nav>
 
-          <Link
-            href="/chat"
-            className="btnPrimary rounded-xl px-4 py-2 text-sm font-semibold"
-          >
+          <Link href="/chat" className="btnPrimary rounded-xl px-4 py-2 text-sm font-semibold">
             Talk to an Agent
           </Link>
         </div>
@@ -106,6 +186,7 @@ export default function Home() {
                 See how the agent works
               </a>
 
+              {/* GOLD MythBuster button stays */}
               <Link
                 href="/mythbuster"
                 className="mythbtn inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold"
@@ -114,6 +195,12 @@ export default function Home() {
                 Try MythBuster free
               </Link>
             </div>
+
+            {/* Disclaimers */}
+            <DisclaimerInline />
+
+            {/* Trust strip */}
+            <TrustStrip />
 
             {/* Stats */}
             <div className="mt-8 grid grid-cols-3 gap-4 text-left">
@@ -139,9 +226,7 @@ export default function Home() {
                 <div className="ai-scan pointer-events-none absolute inset-0 opacity-30" />
 
                 <div className="flex items-center justify-between gap-3">
-                  <div className="text-sm font-semibold text-white/90">
-                    Sanjeevani Signal
-                  </div>
+                  <div className="text-sm font-semibold text-white/90">Sanjeevani Signal</div>
 
                   <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-100">
                     <span className="ai-dot" />
@@ -155,6 +240,11 @@ export default function Home() {
 
                 <div className="mt-5">
                   <FlightPath />
+                </div>
+
+                <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-3 text-xs text-white/65">
+                  <span className="font-semibold text-white/80">Note:</span> Informational and coordination support only.
+                  Not for emergencies.
                 </div>
               </div>
             </div>
@@ -232,6 +322,11 @@ export default function Home() {
               <Link href="/mythbuster" className="mythbtn rounded-xl px-5 py-3 text-sm font-semibold">
                 Try MythBuster free
               </Link>
+
+              <span className="text-xs text-white/60">
+                <Stethoscope className="mr-1 inline h-4 w-4" />
+                Not medical advice. For emergencies, call 911.
+              </span>
             </div>
           </div>
         </section>
@@ -265,6 +360,11 @@ export default function Home() {
                 </div>
               ))}
             </div>
+
+            <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-white/70">
+              <span className="font-semibold text-white/80">Disclaimer:</span> Final treatment decisions are made by
+              licensed clinicians. We support coordination and information based on what you share.
+            </div>
           </div>
         </section>
       </Reveal>
@@ -280,6 +380,11 @@ export default function Home() {
               Scan-friendly comparison. Exact prices vary; these are indicative ranges.
             </p>
 
+            <div className="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-white/70">
+              <span className="font-semibold text-white/80">Cost disclaimer:</span> Numbers shown are estimates for
+              educational/decision support. Quotes depend on medical review, hospital, surgeon, city, and case complexity.
+            </div>
+
             <div className="mt-8 grid gap-4 md:grid-cols-3">
               <CostCard title="CABG (Heart Bypass)" icon={<HeartPulse className="h-5 w-5 text-white/85" />} india="$10k–$20k" usa="$80k–$200k" indiaPct={20} usaPct={90} />
               <CostCard title="Knee Replacement" icon={<Bone className="h-5 w-5 text-white/85" />} india="$7k–$15k" usa="$30k–$70k" indiaPct={18} usaPct={70} />
@@ -293,20 +398,88 @@ export default function Home() {
       <Reveal>
         <section id="trust" className="mx-auto max-w-6xl px-5 pb-16">
           <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
-            Trust, safety, and standards
+            Trust, privacy, and compliance
           </h2>
+          <p className="mt-3 max-w-3xl text-white/75">
+            Built for sensitive healthcare workflows: consent-first, auditable access, and HIPAA-aligned controls.
+          </p>
 
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {[
-              { title: "Accredited hospitals", desc: "We prioritize global-quality standards (JCI / NABH)." },
-              { title: "Privacy-first", desc: "Consent-based handling of sensitive information." },
-              { title: "Continuity of care", desc: "Coordination from consult to follow-up." },
+              {
+                title: "HIPAA compliance",
+                desc: "Designed for HIPAA compliance (administrative, physical, and technical safeguards).",
+                img: "/icons/hipaa-badge.png",
+              },
+              {
+                title: "Consent-based sharing",
+                desc: "No patient data is shared outside the platform without explicit permission.",
+                img: "/icons/Consent.png",
+              },
+              {
+                title: "Access audit trail",
+                desc: "Audit logs track authorized access to patient records (who/what/when).",
+                img: "/icons/audit-log.png",
+              },
+              {
+                title: "Privacy-first defaults",
+                desc: "Least-privilege access, role-based controls, and secure handling of reports.",
+                img: "/icons/privacy-lock.png",
+              },
+              {
+                title: "Accredited hospitals",
+                desc: "We prioritize global-quality standards (JCI / NABH) where applicable.",
+                icon: <BadgeCheck className="h-5 w-5 text-white/85" />,
+              },
+              {
+                title: "Not medical advice",
+                desc: "We support coordination and information — clinical decisions are made by clinicians.",
+                icon: <Stethoscope className="h-5 w-5 text-white/85" />,
+              },
             ].map((x) => (
               <div key={x.title} className="card3d rounded-2xl p-6">
-                <div className="text-lg font-semibold">{x.title}</div>
+                <div className="flex items-center gap-3">
+                  {"img" in x ? (
+                    <IconBadge src={x.img!} alt={x.title} />
+                  ) : (
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+                      {x.icon}
+                    </div>
+                  )}
+                  <div className="text-lg font-semibold">{x.title}</div>
+                </div>
                 <div className="mt-2 text-sm text-white/70">{x.desc}</div>
               </div>
             ))}
+          </div>
+
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <details className="card3d rounded-2xl p-6">
+              <summary className="cursor-pointer select-none text-sm font-semibold text-white/85">
+                Privacy & patient data (details)
+              </summary>
+              <div className="mt-3 space-y-2 text-sm text-white/70">
+                <p>• We use consent-based workflows for sharing with providers.</p>
+                <p>• Access is restricted by roles and “minimum necessary” principle.</p>
+                <p>• You can request deletion/export of your information (policy-dependent).</p>
+              </div>
+            </details>
+
+            <details className="card3d rounded-2xl p-6">
+              <summary className="cursor-pointer select-none text-sm font-semibold text-white/85">
+                Audit logs & compliance (details)
+              </summary>
+              <div className="mt-3 space-y-2 text-sm text-white/70">
+                <p>• Audit trail records authorized user access and key actions.</p>
+                <p>• Designed for HIPAA compliance; we can support BAAs when needed (as you operationalize).</p>
+                <p>• Security controls evolve as the product moves from demo → production.</p>
+              </div>
+            </details>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-white/60">
+            <span className="font-semibold text-white/80">Legal:</span> This site is for informational and care coordination purposes only.
+            It does not establish a doctor–patient relationship. If you believe you may have a medical emergency, call your local emergency number.
           </div>
         </section>
       </Reveal>
@@ -326,10 +499,15 @@ export default function Home() {
               <div className="card3d rounded-2xl bg-[#070b1f] p-6">
                 <div className="text-sm font-semibold">Contact</div>
                 <div className="mt-4 space-y-2 text-sm text-white/75">
-                  <div><span className="text-white/60">Email:</span> your-email@domain.com</div>
-                  <div><span className="text-white/60">Phone:</span> +1 (xxx) xxx-xxxx</div>
-                  <div><span className="text-white/60">WhatsApp:</span> +91 xxxxxxxxxx</div>
-                  <div><span className="text-white/60">Office:</span> City, State, India</div>
+                  <div><span className="text-white/60">Email:</span> bpimmanni@gmail.com</div>
+                  <div><span className="text-white/60">Phone:</span> +1 (781) 671-4423</div>
+                  <div><span className="text-white/60">WhatsApp:</span> +1 (781) 671-4423</div>
+                  <div><span className="text-white/60">Office:</span> Waltham, MA, USA</div>
+                </div>
+
+                <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-3 text-xs text-white/60">
+                  <span className="font-semibold text-white/80">Privacy note:</span> Only share medical reports through the secure flow.
+                  Avoid sending sensitive data over plain email/SMS.
                 </div>
               </div>
 
@@ -338,7 +516,7 @@ export default function Home() {
                 <p className="mt-2 text-sm text-white/70">Share your details and we’ll call you back.</p>
 
                 <a
-                  href="https://forms.gle/your-google-form-link"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSch7HktlNUwpj3dDnvVDMB0rdzBJQONWRVSZ3Vh0xII2QKUAw/viewform?usp=sharing&ouid=110541935064243557937"
                   target="_blank"
                   rel="noreferrer"
                   className="btnPrimary mt-5 inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold"
@@ -362,6 +540,7 @@ export default function Home() {
             <div className="flex gap-4">
               <a className="hover:text-white" href="#">Privacy</a>
               <a className="hover:text-white" href="#">Terms</a>
+              <a className="hover:text-white" href="#trust">Disclaimers</a>
             </div>
           </div>
         </div>

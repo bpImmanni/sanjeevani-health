@@ -30,8 +30,8 @@ body{
   background-image: url("/human-hero.png"); /* <-- your file in /public */
   background-repeat: no-repeat;
   background-position: center;
-  background-size: min(1100px, 85vw);
-  opacity: 0.16;                 /* visible but subtle */
+  background-size: min(1200px, 88vw);
+  opacity: 0.18;                 /* visible but subtle */
   filter: saturate(1.15) contrast(1.05);
   mix-blend-mode: screen;        /* gives golden glow feel */
   pointer-events: none;
